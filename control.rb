@@ -4,6 +4,11 @@ require 'watir-webdriver'
 require 'watir-webdriver/wait'
 
 module Control
+  #Data Structures:
+  class BoardMovement < Struct.new("State", :color, :movement)
+  end
+
+  #Classes:
   class ChessGame #Interface for a chess game.
 
     #Find a game, and once found, calls callback.
@@ -35,31 +40,72 @@ module Control
       @username = user
       @password = pass
     end
+
     def find_game(callback: nil) 
       if(@browser == nil)
-        @browser = Watir::Browser.new :chrome
+        @browser = Watir::Browser.new :firefox
       end
 
       #Login
-      @browser.goto@base_url + @locations[:login]
+      @browser.goto @base_url + @locations[:login]
       @browser.text_field(:id => "c1").set @username
       @browser.text_field(:id => "loginpassword").set @password
       @browser.button(:id => "btnLogin").click
       @browser.goto @base_url + @locations[:play]
 
-      if @browser.button(:class => "dialog_welcome_close_window_button").exists?
-        @browser.button(:class => "dialog_welcome_close_window_button").click
+      close = @browser.span(:id => "dijitDialogCloseIcon")
+      if close.exists? 
+        close.click
       end
 
-      #@browser.button(:id => "new_game_pane_create_button").click
+      play_button = @browser.button(:id => "new_game_pane_create_button")
+
+      @browser.wait_until { play_button.visible? } 
+      #play_button.click
+
+      @browser.div(:id => 'game_container').wait_until_present
 
       #done
       callback.call(:chess => self)
     end
 
+    #[from, to] must be chess coordinates like "a7"
+    def move_piece(from: "", to: "")
+      from = @browser.image(:id, /img_chessboard.*#{from}/)
+        to   = @browser.image(:id, /img_chessboard.*#{to}/)
+        p from
+      p to
+      begin 
+        #Selenium race condition requires error handling
+        return nil if (!from.exists? || !to.exists?) && (from.visible? && to.visible?)
+
+        from.drag_and_drop_on(to)
+      rescue Selenium::WebDriver::Error::ObsoleteElementError
+        return nil
+      end
+    end
+
+
     def get_board()
-      #t = @browser.div(:id => "moves")
-      #p t.lis.length
+      ret = []
+      white = true
+
+      begin
+        @browser.spans(:id, /movelist_\d\d?\d?/).each do | move |
+          str = move.as[0].text
+          if str != nil && str.length > 0 #This is a valid command
+            add = BoardMovement.new
+            add.color = white ? :white : :black
+            add.movement = str
+            white = !white
+            ret << add
+          end
+        end
+      rescue Selenium::WebDriver::Error::ObsoleteElementError
+        return nil
+      end
+
+      return ret
     end
   end
 end
