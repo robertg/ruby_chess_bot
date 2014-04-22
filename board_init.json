@@ -1,0 +1,152 @@
+[
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "a2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "b2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "c2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "d2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "e2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "f2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "white",
+    "position": "g2"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "a7"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "b7"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "c7"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "d7"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "e7"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "f7"
+  },
+  {
+    "piece": "pawn",
+    "colour": "black",
+    "position": "g7"
+  },
+  {
+    "piece": "rook",
+    "colour": "black",
+    "position": "a8"
+  },
+  {
+    "piece": "rook",
+    "colour": "white",
+    "position": "a1"
+  },
+  {
+    "piece": "rook",
+    "colour": "black",
+    "position": "h8"
+  },
+  {
+    "piece": "rook",
+    "colour": "white",
+    "position": "h1"
+  },
+  {
+    "piece": "knight",
+    "colour": "white",
+    "position": "b1"
+  },
+  {
+    "piece": "knight",
+    "colour": "white",
+    "position": "g1"
+  },
+  {
+    "piece": "knight",
+    "colour": "black",
+    "position": "b8"
+  },
+  {
+    "piece": "knight",
+    "colour": "black",
+    "position": "g8"
+  },
+  {
+    "piece": "bishop",
+    "colour": "white",
+    "position": "c1"
+  },
+  {
+    "piece": "bishop",
+    "colour": "white",
+    "position": "f1"
+  },
+  {
+    "piece": "bishop",
+    "colour": "black",
+    "position": "c8"
+  },
+  {
+    "piece": "bishop",
+    "colour": "black",
+    "position": "f8"
+  },
+  {
+    "piece": "queen",
+    "colour": "white",
+    "position": "d1"
+  },
+  {
+    "piece": "queen",
+    "colour": "black",
+    "position": "d8"
+  },
+  {
+    "piece": "king",
+    "colour": "white",
+    "position": "e1"
+  },
+  {
+    "piece": "king",
+    "colour": "black",
+    "position": "e8"
+  }
+]

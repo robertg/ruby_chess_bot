@@ -5,7 +5,7 @@ require 'watir-webdriver/wait'
 
 module Control
   #Data Structures:
-  class BoardMovement < Struct.new("State", :color, :movement)
+  BoardMovement = Struct.new(:colour, :movement) do
   end
 
   #Classes:
@@ -54,13 +54,13 @@ module Control
       @browser.goto @base_url + @locations[:play]
 
       close = @browser.span(:id => "dijitDialogCloseIcon")
-      if close.exists? 
+      if close.exists? && clone.visible?
         close.click
       end
 
       play_button = @browser.button(:id => "new_game_pane_create_button")
 
-      @browser.wait_until { play_button.visible? } 
+      @browser.wait_until { play_button.exists? && play_button.visible? } 
       play_button.click
 
       @browser.div(:id => 'game_container').wait_until_present
@@ -82,19 +82,16 @@ module Control
 
           from.drag_and_drop_on(to)
           return 1
-        rescue Selenium::WebDriver::Error::ObsoleteElementError
-          return nil
-        rescue Watir::Exception::UnknownObjectException
-          return nil
-        rescue Selenium::WebDriver::Error::MoveTargetOutOfBoundsError
-          return nil
-        rescue Selenium::WebDriver::Error::UnknownError
+        rescue Selenium::WebDriver::Error::ObsoleteElementError, 
+          Watir::Exception::UnknownObjectException, 
+          Selenium::WebDriver::Error::MoveTargetOutOfBoundsError, 
+          Selenium::WebDriver::Error::UnknownError
           return nil
         end
     end
 
     count = 5
-    while attempt.call != nil && count != 0
+    while attempt.call == nil && count != 0
         count -= 1 #try again
       end
     end
@@ -110,7 +107,7 @@ module Control
             str = move.as[0].text
           if str != nil && str.length > 0 #This is a valid command
             add = BoardMovement.new
-            add.color = white ? :white : :black
+            add.colour = white ? :white : :black
             add.movement = str
             white = !white
             ret << add
@@ -119,6 +116,7 @@ module Control
       rescue Selenium::WebDriver::Error::ObsoleteElementError
         return nil
       end
+      return ret
     end
 
     count = 5 #Try five times
